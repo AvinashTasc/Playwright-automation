@@ -1,8 +1,90 @@
-ablespace-playwright/
-├── .env.example
-├── .gitignore
-├── package.json
-├── playwright.config.ts
-├── README.md
-└── tests/
-    └── create-space.spec.ts
+# Ablespace Playwright Automation
+
+This project contains a basic Playwright TypeScript test for an important
+post-login workflow:
+
+1. Log in to the staging application.
+2. Create a new Space/Workspace.
+3. Verify that the Space is saved, searchable, and displays the entered details.
+
+Signup is intentionally not automated.
+
+## Prerequisites
+
+- Node.js 18 or later
+- npm
+
+## Installation
+
+Install project dependencies:
+
+```bash
+npm install
+```
+
+Install Playwright browsers:
+
+```bash
+npx playwright install
+```
+
+## Set login credentials
+
+1. Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+2. Open `.env` and update these values:
+
+```env
+BASE_URL=[https://staging.ablespace.io](https://staging.ablespace.io)
+TEST_EMAIL=your_staging_email@example.com
+TEST_PASSWORD=your_staging_password
+```
+
+The `.env` file is excluded from Git through `.gitignore`, so credentials
+should not be committed.
+
+## Update locators
+
+The test uses accessible roles and labels where possible. Before running it,
+update any placeholder selectors to match the actual staging application,
+
+for example:
+
+- Email field label
+- Password field label
+- Login button text
+- Navigation link text
+- Create Space button text
+- Space name and description field labels
+- Save/Create button text
+- Search field label
+- Space result link or card
+
+Prefer stable locators such as `getByRole`, `getByLabel`, or
+`getByTestId` rather than CSS classes or dynamically generated IDs.
+
+## Run the test
+
+Run the test in headless mode:
+
+```bash
+npm test
+```
+
+Run the test in headed mode:
+
+```bash
+npm run test:headed
+```
+
+## Test report and evidence
+
+On failure, Playwright saves a trace and screenshot. To view the trace:
+
+```bash
+npx playwright show-trace test-results/<test-folder>/trace.zip
+```
